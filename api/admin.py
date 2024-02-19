@@ -29,5 +29,5 @@ class CategoryAdmin(admin.ModelAdmin):
  pass 
 
 
-admin.site.site_header = "MarketMate"
-admin.site.site_title = "MarketMate"
+admin.site.site_header = "amJADD"
+admin.site.site_title = "AMjAD"
