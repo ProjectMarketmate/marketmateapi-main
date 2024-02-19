@@ -28,3 +28,6 @@ class PaymentAdmin(admin.ModelAdmin):
 class CategoryAdmin(admin.ModelAdmin):
  pass 
 
+
+admin.site.site_header = "MarketMate"
+admin.site.site_title = "MarketMate"
