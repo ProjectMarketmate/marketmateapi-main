@@ -1,6 +1,6 @@
 from django.urls import path
 
-from core.api.app.product.views import ProductListAPIView
+from core.api.app.product import ProductListAPIView
 
 
 

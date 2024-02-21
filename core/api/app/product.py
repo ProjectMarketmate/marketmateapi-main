@@ -1,9 +1,27 @@
+from rest_framework import serializers
+
 from rest_framework import generics
-from core.api.app.product.serializers import ProductSerializer
-from core.api.app.product.serializers import CategorySerializer
+
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from core.models import Category, Product
+
+
+from core.models import Category, Product
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = '__all__'
+
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = '__all__'
+
+
+
+
 
 class CategoryListAPIView(generics.ListAPIView):
     queryset = Category.objects.all()
