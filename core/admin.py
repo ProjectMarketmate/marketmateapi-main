@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from core.models import CartItem, Product, Category
+from core.models import CartItem, Order, Product, Category
 
 # Register your models here.
 
@@ -20,3 +20,8 @@ class CartItemAdmin(admin.ModelAdmin):
 
 admin.site.site_header = "MARKETMATE"
 admin.site.site_title = "MARKETMATE"
+
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+ pass
