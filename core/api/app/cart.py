@@ -6,9 +6,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-CartItemSerializer=ProductSerializer
+
 class CartItemSerializer(serializers.ModelSerializer):
-    
+    CartItemSerializer=ProductSerializer 
     class Meta:
         model = CartItem
         fields = '__all__'
