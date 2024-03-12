@@ -1,14 +1,18 @@
 from rest_framework import serializers
+from core.api.app.product import ProductSerializer
 
 from core.models import CartItem
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
+CartItemSerializer=ProductSerializer
 class CartItemSerializer(serializers.ModelSerializer):
+    
     class Meta:
         model = CartItem
         fields = '__all__'
+        
     
 class CartItemListApiView(APIView):
 
