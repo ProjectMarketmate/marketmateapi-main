@@ -8,7 +8,7 @@ from rest_framework import status
 
 
 class CartItemSerializer(serializers.ModelSerializer):
-    CartItemSerializer=ProductSerializer 
+    product=ProductSerializer 
     class Meta:
         model = CartItem
         fields = '__all__'
