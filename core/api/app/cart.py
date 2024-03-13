@@ -7,17 +7,18 @@ from rest_framework.response import Response
 from rest_framework import status
 
 
-class CartItemSerializer(serializers.ModelSerializer):
-    
+class CartItemGetSerializer(serializers.ModelSerializer):
+    product = ProductSerializer()
     class Meta:
         model = CartItem
         fields = '__all__'
 
-    def to_representation(self, instance):
-        data =  super().to_representation(instance)
-        data['product'] = ProductSerializer(instance.product).data
-        return data
-        
+class CartItemCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CartItem
+        fields = '__all__'
+
+ 
     
 class CartItemListApiView(APIView):
 
@@ -26,7 +27,7 @@ class CartItemListApiView(APIView):
         userId = request.user.id
         if userId:
             cart_items = CartItem.objects.filter(user=userId)
-            serializer = CartItemSerializer(cart_items, many=True, context={'request': request})
+            serializer = CartItemGetSerializer(cart_items, many=True, context={'request': request})
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
@@ -34,7 +35,7 @@ class CartItemListApiView(APIView):
 
     def post(self, request, *args, **kwargs):
      
-        serializer = CartItemSerializer(data=request.data)
+        serializer = CartItemCreateSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
