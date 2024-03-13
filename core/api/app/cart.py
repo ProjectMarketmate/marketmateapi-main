@@ -34,8 +34,11 @@ class CartItemListApiView(APIView):
 
 
     def post(self, request, *args, **kwargs):
-     
-        serializer = CartItemCreateSerializer(data=request.data)
+        user = request.user
+        data = request.data.copy()  # avoid modifying the query params
+        data['user'] = user.id
+        
+        serializer = CartItemCreateSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
