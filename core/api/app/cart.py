@@ -35,7 +35,7 @@ class CartItemListApiView(APIView):
 
     def post(self, request, *args, **kwargs):
         user = request.user
-        data = request.data.copy()  # avoid modifying the query params
+        data = request.data.copy() 
         data['user'] = user.id
         
         serializer = CartItemCreateSerializer(data=data)
@@ -44,4 +44,42 @@ class CartItemListApiView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-       
+        
+
+
+
+
+class CartItemUpdateApiView(APIView):
+
+    def patch(self, request, pk, *args, **kwargs):
+        userId = request.user.id
+        if userId:
+            try:
+                cart_item = CartItem.objects.get(id=pk, user=request.user)
+            except CartItem.DoesNotExist:
+                return Response({"error": "Cart item not found"}, status=status.HTTP_404_NOT_FOUND)
+
+            serializer = CartItemCreateSerializer(cart_item, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+    
+
+class CartItemDeleteApiView(APIView):
+
+    def delete(self, request, pk, *args, **kwargs):
+        userId = request.user.id
+        if userId:
+            try:
+                cart_item = CartItem.objects.get(id=pk, user=request.user)
+            except CartItem.DoesNotExist:
+                return Response({"error": "Cart item not found"}, status=status.HTTP_404_NOT_FOUND)
+
+            cart_item.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
