@@ -8,10 +8,15 @@ from rest_framework import status
 
 
 class CartItemSerializer(serializers.ModelSerializer):
-    product = ProductSerializer()
+    
     class Meta:
         model = CartItem
         fields = '__all__'
+
+    def to_representation(self, instance):
+        data =  super().to_representation(instance)
+        data['product'] = ProductSerializer(instance.product).data
+        return data
         
     
 class CartItemListApiView(APIView):
@@ -21,7 +26,7 @@ class CartItemListApiView(APIView):
         userId = request.user.id
         if userId:
             cart_items = CartItem.objects.filter(user=userId)
-            serializer = CartItemSerializer(cart_items, many=True)
+            serializer = CartItemSerializer(cart_items, many=True, context={'request': request})
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
