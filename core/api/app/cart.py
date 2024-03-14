@@ -82,12 +82,9 @@ class CartItemUpdateApiView(APIView):
             except CartItem.DoesNotExist:
                 return Response({"error": "Cart item not found"}, status=status.HTTP_404_NOT_FOUND)
 
-            serializer = CartItemCreateSerializer(cart_item, data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=status.HTTP_200_OK)
-            else:
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            quantity = request.data.get('quantity')
+            cart_item.quantity = quantity
+            cart_item.save()
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
     
