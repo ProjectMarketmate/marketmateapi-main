@@ -85,6 +85,7 @@ class CartItemUpdateApiView(APIView):
             quantity = request.data.get('quantity')
             cart_item.quantity = quantity
             cart_item.save()
+            return Response(status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
     
