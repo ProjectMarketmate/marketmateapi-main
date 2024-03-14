@@ -56,7 +56,7 @@ class CartItemListApiView(APIView):
         existing_cart_item = CartItem.objects.filter(user=user, product=product_id).first()
         if existing_cart_item:
             # If the product already exists, increment its quantity
-            existing_cart_item.quantity += 1
+            existing_cart_item.quantity += data.get('quantity', 1)
             existing_cart_item.save()
             serializer = CartItemCreateSerializer(existing_cart_item)
             return Response(serializer.data, status=status.HTTP_200_OK)
