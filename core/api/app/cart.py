@@ -33,18 +33,41 @@ class CartItemListApiView(APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
+    # def post(self, request, *args, **kwargs):
+    #     user = request.user
+    #     data = request.data.copy() 
+    #     data['user'] = user.id
+        
+    #     serializer = CartItemCreateSerializer(data=data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #     else:
+    #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+
     def post(self, request, *args, **kwargs):
         user = request.user
-        data = request.data.copy() 
+        data = request.data.copy()
         data['user'] = user.id
+        product_id = data.get('product')  # Assuming 'product' is the field containing the product ID
         
+        # Check if the product already exists in the user's cart
+        existing_cart_item = CartItem.objects.filter(user=user, product=product_id).first()
+        if existing_cart_item:
+            # If the product already exists, increment its quantity
+            existing_cart_item.quantity += 1
+            existing_cart_item.save()
+            serializer = CartItemCreateSerializer(existing_cart_item)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        
+        # If the product does not exist, create a new cart item
         serializer = CartItemCreateSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
 
 
 
