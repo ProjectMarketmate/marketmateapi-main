@@ -15,8 +15,9 @@ class CustomUser(AbstractUser):
     mobile = models.CharField(max_length=10)
     image = models.ImageField(upload_to=f'profile/user/',default = 'user.png',blank=True)
     otp = models.IntegerField(null=True,blank=True)
-    
-    REQUIRED_FIELDS = ['first_name','last_name','mobile','username','is_admin']
+    address = models.TextField(blank=True,default="")
+
+    REQUIRED_FIELDS = ['first_name','last_name','mobile','username','is_admin','address']
     USERNAME_FIELD = 'email'
       
     def __str__(self):
