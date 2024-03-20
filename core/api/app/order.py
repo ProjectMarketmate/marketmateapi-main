@@ -16,9 +16,10 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
 class OrderSerializer(serializers.ModelSerializer):
     items = serializers.SerializerMethodField()
+    
     class Meta:
         model = Order
-        fields = ['user','status','created_at','updated_at','items']
+        fields = ['user','status','created_at','updated_at','items','id']
 
     def get_items(self, obj):
         items = OrderItem.objects.filter(order=obj)
