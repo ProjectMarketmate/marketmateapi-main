@@ -22,8 +22,9 @@ class OrderSerializer(serializers.ModelSerializer):
         fields = ['user','status','created_at','updated_at','items','id']
 
     def get_items(self, obj):
+        request = self.context.get('request')
         items = OrderItem.objects.filter(order=obj)
-        serializer = OrderItemSerializer(items, many=True)
+        serializer = OrderItemSerializer(items, many=True,context={'request': request})
         return serializer.data
 
 class OrderApiView(APIView):
@@ -31,7 +32,7 @@ class OrderApiView(APIView):
         userId = request.user.id
         if userId:
             orders = Order.objects.filter(user=userId)
-            serializer = OrderSerializer(orders, many=True)
+            serializer = OrderSerializer(orders, many=True,context={'request': request})
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
