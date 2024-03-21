@@ -56,6 +56,7 @@ class Order(models.Model):
         CANCELED = 'Canceled', 'Canceled'
 
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    staff = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='staff')
     status = models.CharField(max_length=50, choices=ORDER_STATUS.choices, default=ORDER_STATUS.PENDING)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
