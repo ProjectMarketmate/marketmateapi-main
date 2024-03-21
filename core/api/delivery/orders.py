@@ -15,7 +15,7 @@ class OrderSerializer(serializers.ModelSerializer):
  
     class Meta:
         model = Order
-        fields = ['user', 'status', 'items']
+        fields = ['user', 'status', 'items','id','']
 
 
 class OrderListCreateAPIView(generics.ListCreateAPIView):
@@ -27,10 +27,4 @@ class OrderListCreateAPIView(generics.ListCreateAPIView):
         user = self.request.user
         return Order.objects.filter(staff=user)
     
-
-
-class OrderRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Order.objects.all()
-    serializer_class = OrderSerializer
-
 
