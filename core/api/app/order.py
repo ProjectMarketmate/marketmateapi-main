@@ -44,14 +44,14 @@ class OrderApiView(APIView):
 class OrderCreateApiView(APIView):
     def post(self, request, *args, **kwargs):
         user = request.user
-        order = Order.objects.create(user=user)
+     
         cart_items = CartItem.objects.filter(user=user)
         staffs = CustomUser.objects.filter(is_staff=True,is_active=True,is_superuser=False)
-
+        print(staffs)
         random_staff = staffs[random.randint(0, len(staffs) - 1)]
-        if random_staff:
-            order.staff = random_staff
-            order.save()          
+        if not random_staff:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        order = Order.objects.create(user=user, staff=random_staff) 
         
         for cart_item in cart_items:
             order_item = OrderItem.objects.create(order=order, product=cart_item.product, quantity=cart_item.quantity)
