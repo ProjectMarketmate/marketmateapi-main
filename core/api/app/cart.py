@@ -31,19 +31,6 @@ class CartItemListApiView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
-
-
-    # def post(self, request, *args, **kwargs):
-    #     user = request.user
-    #     data = request.data.copy() 
-    #     data['user'] = user.id
-        
-    #     serializer = CartItemCreateSerializer(data=data)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    #     else:
-    #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
 
     def post(self, request, *args, **kwargs):
