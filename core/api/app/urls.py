@@ -1,6 +1,6 @@
 from django.urls import include, path
 
-from core.api.app.order import OrderApiView, OrderCreateApiView, OrderDeleteApiView, OrderRetrieveUpdateDestroyAPIView
+from core.api.app.order import OrderApiView, OrderCreateApiView,  OrderRetrieveUpdateDestroyAPIView
 from core.api.app.product import CategoryListAPIView, ProductListAPIView
 from core.api.app.cart import CartItemDeleteApiView, CartItemListApiView, CartItemUpdateApiView
 
