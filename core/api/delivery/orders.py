@@ -19,11 +19,13 @@ class OrderSerializer(serializers.ModelSerializer):
 
 
 class OrderListCreateAPIView(generics.ListCreateAPIView):
-    queryset = Order.objects.all()
     serializer_class = OrderSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['status']
 
+    def get_queryset(self):
+        user = self.request.user
+        return Order.objects.filter(staff=user)
     
 
 

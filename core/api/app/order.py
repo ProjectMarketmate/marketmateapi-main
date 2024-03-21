@@ -1,8 +1,10 @@
+import random
 from urllib import request
 from rest_framework import serializers
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from account.models import CustomUser
 from core.api.app.product import ProductSerializer
 from core.models import CartItem, Order, OrderItem, Product
 
@@ -44,9 +46,17 @@ class OrderCreateApiView(APIView):
         user = request.user
         order = Order.objects.create(user=user)
         cart_items = CartItem.objects.filter(user=user)
+        staffs = CustomUser.objects.filter(is_staff=True,is_active=True,is_superuser=False)
 
+        random_staff = staffs[random.randint(0, len(staffs) - 1)]
+        if random_staff:
+            order.staff = random_staff
+            order.save()
+        
         for cart_item in cart_items:
             order_item = OrderItem.objects.create(order=order, product=cart_item.product, quantity=cart_item.quantity)
             cart_item.delete()
+
+            
 
         return Response(status=status.HTTP_201_CREATED)
