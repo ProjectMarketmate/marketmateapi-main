@@ -7,7 +7,7 @@ from rest_framework import status
 from account.models import CustomUser
 from core.api.app.product import ProductSerializer
 from core.models import CartItem, Order, OrderItem, Product
-
+from rest_framework import generics
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
@@ -21,7 +21,7 @@ class OrderSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Order
-        fields = ['user','status','created_at','updated_at','items','id']
+        fields = ['user','status','created_at','updated_at','items','id','staff']
 
     def get_items(self, obj):
         request = self.context.get('request')
@@ -60,3 +60,21 @@ class OrderCreateApiView(APIView):
             
 
         return Response(status=status.HTTP_201_CREATED)
+
+class OrderDeleteApiView(APIView):
+    def delete(self, request, pk, *args, **kwargs):
+        userId = request.user.id
+        if userId:
+            try:
+                order = Order.objects.get(id=pk, user=request.user)
+            except Order.DoesNotExist:
+                return Response({"error": "Order not found"}, status=status.HTTP_404_NOT_FOUND)
+
+            order.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+class OrderRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
