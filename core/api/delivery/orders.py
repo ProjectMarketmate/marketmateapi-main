@@ -27,4 +27,6 @@ class OrderListCreateAPIView(generics.ListCreateAPIView):
         user = self.request.user
         return Order.objects.filter(staff=user)
     
-
+class OrderRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = OrderSerializer
+    queryset = Order.objects.all()
