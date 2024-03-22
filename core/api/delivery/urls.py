@@ -1,6 +1,6 @@
 from django.urls import path
 
-from core.api.delivery.orders import OrderListCreateAPIView, OrderRetrieveUpdateDestroyAPIView
+from core.api.delivery.orders import OrderListCreateAPIView
 
 
 
