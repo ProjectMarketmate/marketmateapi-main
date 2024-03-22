@@ -15,7 +15,7 @@ class OrderSerializer(serializers.ModelSerializer):
  
     class Meta:
         model = Order
-        fields = ['user', 'status', 'items','id','']
+        fields = ['user', 'status', 'items','id']
 
 
 class OrderListCreateAPIView(generics.ListCreateAPIView):
