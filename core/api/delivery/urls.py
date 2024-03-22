@@ -5,7 +5,7 @@ from core.api.delivery.orders import OrderListCreateAPIView, OrderRetrieveUpdate
 
 
 urlpatterns=[
-  path('orders/', OrderListCreateAPIView.as_view(), name='order-list-create'),
+  path('orders/', OrderListCreateAPIView.as_view()),
   
 
 ]
