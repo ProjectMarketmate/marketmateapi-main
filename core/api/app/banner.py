@@ -16,3 +16,4 @@ class OfferBannerRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIV
     serializer_class = OfferBannerSerializer
     queryset = OfferBanner.objects.all()
 
+
