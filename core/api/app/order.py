@@ -93,7 +93,7 @@ class StaffOrdersListApiView(APIView):
         userId = request.user.id
         if userId:
             orders = Order.objects.filter(staff=userId)
-            serializer = OrderSerializer(orders, many=True,context={'request': request})
+            serializer = StaffOrderSerializer(orders, many=True,context={'request': request})
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
