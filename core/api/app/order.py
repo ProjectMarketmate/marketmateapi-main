@@ -66,3 +66,18 @@ class OrderRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
 
+
+
+
+##!!! Delivary Api View
+    
+
+class StaffOrdersListApiView(APIView):
+    def get(self, request, *args, **kwargs):
+        userId = request.user.id
+        if userId:
+            orders = Order.objects.filter(staff=userId)
+            serializer = OrderSerializer(orders, many=True,context={'request': request})
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
