@@ -70,7 +70,23 @@ class OrderRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
 
 
 ##!!! Delivary Api View
-    
+class CustomerDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['id','first_name','last_name','mobile','email','address']
+
+class StaffOrderSerializer(serializers.ModelSerializer):
+    items = serializers.SerializerMethodField()
+    user = CustomerDataSerializer()
+    class Meta:
+        model = Order
+        fields = ['user','status','created_at','updated_at','items','id','staff']
+
+    def get_items(self, obj):
+        request = self.context.get('request')
+        items = OrderItem.objects.filter(order=obj)
+        serializer = OrderItemSerializer(items, many=True,context={'request': request})
+        return serializer.data
 
 class StaffOrdersListApiView(APIView):
     def get(self, request, *args, **kwargs):
@@ -81,3 +97,5 @@ class StaffOrdersListApiView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+        
+
