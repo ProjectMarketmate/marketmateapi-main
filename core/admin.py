@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from core.models import CartItem, Order, Product, Category
+from core.models import CartItem, OfferBanner, Order, Product, Category
 
 # Register your models here.
 
@@ -24,4 +24,8 @@ admin.site.site_title = "MARKETMATE"
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
+ pass
+
+@admin.register(OfferBanner)
+class BannerAdmin(admin.ModelAdmin):
  pass
