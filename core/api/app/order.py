@@ -91,11 +91,11 @@ class StaffOrderSerializer(serializers.ModelSerializer):
 class StaffOrdersListApiView(APIView):
     def get(self, request, *args, **kwargs):
         userId = request.user.id
-        status =   request.query_params.get('status')
+        order_status =   request.query_params.get('status')
         if userId:
             orders = Order.objects.filter(staff=userId)
-            if status:
-                orders = orders.filter(status=status)
+            if order_status:
+                orders = orders.filter(status=order_status)
             serializer = StaffOrderSerializer(orders, many=True,context={'request': request})
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
