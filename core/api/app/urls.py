@@ -2,7 +2,7 @@ from django.urls import include, path
 
 
 from core.api.app.banner import  OfferBannerListCreateAPIView, OfferBannerRetrieveUpdateDestroyAPIView
-from core.api.app.order import OrderApiView, OrderCreateApiView,  OrderRetrieveUpdateDestroyAPIView
+from core.api.app.order import OrderApiView, OrderCreateApiView,  OrderRetrieveUpdateDestroyAPIView, StaffOrdersListApiView
 
 from core.api.app.product import CategoryListAPIView, ProductListAPIView
 from core.api.app.cart import CartItemDeleteApiView, CartItemListApiView, CartItemUpdateApiView
@@ -18,7 +18,7 @@ urlpatterns=[
   path('order/create/',OrderCreateApiView.as_view(),name="app-order-create"),
   path('order/<int:pk>/', OrderRetrieveUpdateDestroyAPIView.as_view(), name='order-detail'),
   path('offers/banners/', OfferBannerListCreateAPIView.as_view(), name='offer-banners'),
-
+  path('staff/orders/', StaffOrdersListApiView.as_view(), name='staff-orders'),
 
 
   
