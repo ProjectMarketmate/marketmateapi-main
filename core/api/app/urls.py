@@ -20,7 +20,7 @@ urlpatterns=[
   path('order/<int:pk>/', OrderRetrieveUpdateDestroyAPIView.as_view(), name='order-detail'),
   path('offers/banners/', OfferBannerListCreateAPIView.as_view(), name='offer-banners'),
   path('staff/orders/', StaffOrdersListApiView.as_view(), name='staff-orders'),
-  path('recommendations/<int:user_id>/', get_recommendations, name='get_recommendations')
+  path('recommendations/<int:userId>/', get_recommendations, name='get_recommendations')
 
 
   
