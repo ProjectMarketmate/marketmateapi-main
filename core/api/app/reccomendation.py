@@ -11,6 +11,6 @@ def get_recommendations(request, userId):
     product_counts = Counter(products)
     # Sort products by frequency in descending order
     sorted_products = sorted(product_counts.items(), key=lambda x: x[1], reverse=True)
-    # Get top 3 recommended products
+    # Get top 3 recommended products for the customer
     recommendations = [product[0] for product in sorted_products[:3]]
     return JsonResponse({'recommendations': recommendations})
