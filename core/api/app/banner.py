@@ -11,6 +11,7 @@ class OfferBannerSerializer(serializers.ModelSerializer):
 class OfferBannerListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = OfferBannerSerializer
     queryset = OfferBanner.objects.all()
+    
 
 class OfferBannerRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = OfferBannerSerializer
