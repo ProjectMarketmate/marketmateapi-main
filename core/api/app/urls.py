@@ -6,7 +6,7 @@ from core.api.app.order import OrderApiView, OrderCreateApiView,  OrderRetrieveU
 
 from core.api.app.product import CategoryListAPIView, ProductListAPIView
 from core.api.app.cart import CartItemDeleteApiView, CartItemListApiView, CartItemUpdateApiView
-from core.api.app.reccomendation import get_recommendations
+from core.api.app.reccomendation import get_recommendation, get_recommendations
 
 
 urlpatterns=[
