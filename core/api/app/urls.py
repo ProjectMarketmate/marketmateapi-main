@@ -1,12 +1,13 @@
 from django.urls import include, path
 
 
-from core.api.app.banner import  OfferBannerListCreateAPIView, OfferBannerRetrieveUpdateDestroyAPIView
-from core.api.app.order import OrderApiView, OrderCreateApiView,  OrderRetrieveUpdateDestroyAPIView, StaffOrdersListApiView
+from core.api.app.banner import  OfferBannerListCreateAPIView
+from core.api.app.order import OrderApiView, OrderCreateApiView,  OrderRetrieveUpdateDestroyAPIView,  StaffOrdersListApiView
 
 from core.api.app.product import CategoryListAPIView, ProductListAPIView
 from core.api.app.cart import CartItemDeleteApiView, CartItemListApiView, CartItemUpdateApiView
-from core.api.app.reccomendation import get_recommendation, get_recommendations
+# from core.api.app.rating import RatingCreateAPIView
+from core.api.app.reccomendation import  get_recommendations
 
 
 urlpatterns=[
@@ -20,7 +21,9 @@ urlpatterns=[
   path('order/<int:pk>/', OrderRetrieveUpdateDestroyAPIView.as_view(), name='order-detail'),
   path('offers/banners/', OfferBannerListCreateAPIView.as_view(), name='offer-banners'),
   path('staff/orders/', StaffOrdersListApiView.as_view(), name='staff-orders'),
-  path('recommendations/<int:userId>/', get_recommendations, name='get_recommendations')
+  path('staff/orders/<int:pk>/',OrderRetrieveUpdateDestroyAPIView.as_view(), name='staff-order-detail'),
+  path('recommendations/<int:userId>/', get_recommendations, name='get_recommendations'),
+  # path('ratings/', RatingCreateAPIView.as_view(), name='rating-create'),
 
 
   

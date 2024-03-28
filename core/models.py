@@ -1,5 +1,5 @@
 from django.db import models
-
+# from django.db.models import Avg
 from account.models import CustomUser
 
 
@@ -23,10 +23,16 @@ class Product(models.Model):
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
+    # average_rating = models.DecimalField(max_digits=3, decimal_places=2, null=True, blank=True)
+
 
     def __str__(self):
         return self.name
+    
+    # def update_average_rating(self):
+    #     average_rating = self.ratings.aggregate(Avg('rating')).get('rating__avg')
+    #     self.average_rating = round(average_rating, 2) if average_rating else None
+    #     self.save()
     
 
 
@@ -80,3 +86,15 @@ class OfferBanner(models.Model):
 
     def __str__(self):
         return self.title
+    
+    
+    
+    ###rating 
+    
+# class Rating(models.Model):
+#     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+#     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='ratings')
+#     rating = models.PositiveIntegerField()
+
+#     def __str__(self):
+#         return f"Rating for {self.product}: {self.rating}"

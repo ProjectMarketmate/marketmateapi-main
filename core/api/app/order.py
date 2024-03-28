@@ -101,4 +101,10 @@ class StaffOrdersListApiView(APIView):
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
         
+class StaffOrderRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Order.objects.all()
+    serializer_class = StaffOrderSerializer
+        
+
+
 
