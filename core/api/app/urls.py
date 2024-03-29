@@ -25,6 +25,6 @@ urlpatterns=[
   path('recommendations/<int:userId>/', get_recommendations, name='get_recommendations'),
   # path('ratings/', RatingCreateAPIView.as_view(), name='rating-create'),
 
-
+ 
   
 ]
