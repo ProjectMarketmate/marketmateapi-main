@@ -12,6 +12,7 @@ def get_recommendations(request, userId):
     # Count the frequency of each product
     product_counts = Counter(products)
     
+    
     # Sort products by frequency in descending order
     sorted_products = sorted(product_counts.items(), key=lambda x: x[1], reverse=True)
     
