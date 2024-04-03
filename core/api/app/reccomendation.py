@@ -41,5 +41,5 @@ def get_recommendations(request):
     sorted_products = sorted(product_counts.items(), key=lambda x: x[1], reverse=True)
     
     # Get top 3 recommended products for the customer
-    recommendations = [{'product': ProductSerializer(product).data } for product, count in sorted_products[:3]]
+    recommendations = [{'product': ProductSerializer(Product).data } for Product, count in sorted_products[:3]]
     return JsonResponse({'recommendations': recommendations})
