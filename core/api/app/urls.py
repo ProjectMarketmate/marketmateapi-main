@@ -7,7 +7,8 @@ from core.api.app.order import OrderApiView, OrderCreateApiView,  OrderRetrieveU
 from core.api.app.product import CategoryListAPIView, ProductListAPIView
 from core.api.app.cart import CartItemDeleteApiView, CartItemListApiView, CartItemUpdateApiView
 # from core.api.app.rating import RatingCreateAPIView
-from core.api.app.toporders import  get_recommendations
+from core.api.app.toporders import  top_Orders
+from core.api.app.recommendations import get_recommendations
 
 
 urlpatterns=[
@@ -22,7 +23,7 @@ urlpatterns=[
   path('offers/banners/', OfferBannerListCreateAPIView.as_view(), name='offer-banners'),
   path('staff/orders/', StaffOrdersListApiView.as_view(), name='staff-orders'),
   path('staff/orders/<int:pk>/',OrderRetrieveUpdateDestroyAPIView.as_view(), name='staff-order-detail'),
-  path('toporders/', get_recommendations, name='get_recommendations'),
+  path('toporders/', top_Orders, name='get_recommendations'),
   # path('ratings/', RatingCreateAPIView.as_view(), name='rating-create'),
   path('recommendations/', get_recommendations, name='get_recommendations'),
   

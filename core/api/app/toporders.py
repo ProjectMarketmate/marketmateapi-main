@@ -26,7 +26,7 @@ from collections import Counter
 from core.api.app.product import ProductSerializer  
 from django.db.models import Count
 
-def get_recommendations(request):
+def top_Orders(request):
     user = request.user.id  # Retrieve the user's ID
 
     # Get top products in OrderItem
