@@ -24,11 +24,12 @@
 from django.http import JsonResponse
 from core.models import OrderItem, Product
 from collections import Counter
-from core.api.app.product import ProductSerializer  # Import the serializer for Product model
+from core.api.app.product import ProductSerializer  
 
-def get_recommendations(request, userId):
+def get_recommendations(request):
+    user = request.user
     # Get all orders of the user
-    user_orders = OrderItem.objects.filter(order__user_id=userId)
+    user_orders = OrderItem.objects.filter(order__user_id=user)
     
     # Extract products from order items
     products = [order_item.product for order_item in user_orders]
