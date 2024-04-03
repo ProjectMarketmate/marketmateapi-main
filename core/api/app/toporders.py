@@ -33,6 +33,6 @@ def get_recommendations(request):
     top_products = OrderItem.objects.values('product').annotate(total=Count('product')).order_by('-total')[:3]
     product_ids = [product['product'] for product in top_products]
     recommendations = Product.objects.filter(id__in=product_ids)
-    serializer = ProductSerializer(recommendations, many=True)
+    serializer = ProductSerializer(recommendations, many=True, context={'request': request})
     
     return JsonResponse({'recommendations': serializer.data})
