@@ -167,3 +167,15 @@ class CustomUserProfileView(APIView):
         user_data.save()
         token, created = Token.objects.get_or_create(user=user)
         return Response({**user_data.data,"token":token.key}, status=status.HTTP_200_OK)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
