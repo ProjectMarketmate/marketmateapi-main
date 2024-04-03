@@ -20,14 +20,14 @@
 #     recommendations = [product[0] for product in sorted_products[:3]]
 #     return JsonResponse({'recommendations': recommendations})
 
-
 from django.http import JsonResponse
 from core.models import OrderItem, Product
 from collections import Counter
 from core.api.app.product import ProductSerializer  
 
 def get_recommendations(request):
-    user = request.user
+    user = request.user.id  # Retrieve the user's ID
+    
     # Get all orders of the user
     user_orders = OrderItem.objects.filter(order__user_id=user)
     
@@ -43,5 +43,3 @@ def get_recommendations(request):
     # Get top 3 recommended products for the customer
     recommendations = [{'product': ProductSerializer(product).data } for product, count in sorted_products[:3]]
     return JsonResponse({'recommendations': recommendations})
-
-

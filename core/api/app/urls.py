@@ -22,7 +22,7 @@ urlpatterns=[
   path('offers/banners/', OfferBannerListCreateAPIView.as_view(), name='offer-banners'),
   path('staff/orders/', StaffOrdersListApiView.as_view(), name='staff-orders'),
   path('staff/orders/<int:pk>/',OrderRetrieveUpdateDestroyAPIView.as_view(), name='staff-order-detail'),
-  path('recommendations/<int:userId>/', get_recommendations, name='get_recommendations'),
+  path('recommendations/', get_recommendations, name='get_recommendations'),
   # path('ratings/', RatingCreateAPIView.as_view(), name='rating-create'),
   
 
