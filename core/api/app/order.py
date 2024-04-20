@@ -74,6 +74,8 @@ class OrderCreateApiView(APIView):
 class OrderRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
+    
+    
 
 
 
