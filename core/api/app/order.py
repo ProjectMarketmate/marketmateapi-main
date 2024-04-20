@@ -31,9 +31,12 @@ class OrderSerializer(serializers.ModelSerializer):
 
 class OrderApiView(APIView):
     def get(self, request, *args, **kwargs):
-        userId = request.user.id
-        if userId:
-            orders = Order.objects.filter(user=userId)
+        user = request.user
+        if user:
+            if user.is_admin:
+                orders = Order.objects.all()
+            else:
+                orders = Order.objects.filter(user=user.id)
             serializer = OrderSerializer(orders, many=True,context={'request': request})
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
@@ -46,7 +49,7 @@ class OrderCreateApiView(APIView):
         user = request.user
      
         cart_items = CartItem.objects.filter(user=user)
-        staffs = CustomUser.objects.filter(is_staff=True,is_active=True,is_superuser=False)
+        staffs = CustomUser.objects.filter(is_admin=True,is_active=True,is_superuser=False)
         print(staffs)
         random_staff = staffs[random.randint(0, len(staffs) - 1)]
         if not random_staff:
