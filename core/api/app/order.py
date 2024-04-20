@@ -28,7 +28,13 @@ class OrderSerializer(serializers.ModelSerializer):
         items = OrderItem.objects.filter(order=obj)
         serializer = OrderItemSerializer(items, many=True,context={'request': request})
         return serializer.data
-
+    
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        user = CustomUser.objects.get(id=data['user'])
+        data['user'] =  CustomerDataSerializer(user).data
+        return data
+    
 class OrderApiView(APIView):
     def get(self, request, *args, **kwargs):
         user = request.user
