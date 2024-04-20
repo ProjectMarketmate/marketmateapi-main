@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status,generics
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 from django.core.mail import send_mail
@@ -49,9 +49,9 @@ def send_otp_email(email):
     user.otp = Util.generateOTP()
     user.save()
     
-    email_body = f'Hi {user.first_name},\n\nYour OTP is {user.otp}.\n\nRegards,\nEventrave Team'
+    email_body = f'Hi {user.first_name},\n\nYour OTP is {user.otp}.\n\nRegards,\nMarketmate Team'
     data = {
-        'subject': 'Eventrave Registration OTP',
+        'subject': 'Marketmate Registration OTP',
         'body': email_body,
         'to_email': user.email
     }
@@ -175,13 +175,6 @@ class CustomUserProfileView(APIView):
     
 
 
-# views.py
-
-from rest_framework import generics
-from rest_framework.response import Response
-from rest_framework import status
-from account.models import CustomUser  # Import your custom user model
-# Import your custom user serializer
 
 class AccountDeleteAPIView(generics.DestroyAPIView):
     queryset = CustomUser.objects.all()  # Use CustomUser queryset instead of User
@@ -191,3 +184,50 @@ class AccountDeleteAPIView(generics.DestroyAPIView):
         user = self.get_object()
         user.delete()
         return Response({'message': 'Account deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
+
+
+
+class SendLoginWithEmailOtp(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        email = request.data.get('email', None)
+        if not email:
+            return Response({'error': 'Email is required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            user = CustomUser.objects.get(email=email)
+        except CustomUser.DoesNotExist:
+            return Response({'error': 'User not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+        send_otp_email(email)
+        return Response({'message': 'OTP sent to your email.'}, status=status.HTTP_200_OK)
+    
+    
+class VerifyLoginWithEmailOtp(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        email = request.data.get('email', None)
+        otp = request.data.get('otp', None)
+        if not email or not otp:
+            return Response({'error': 'Email and OTP are required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            user = CustomUser.objects.get(email=email)
+        except CustomUser.DoesNotExist:
+            return Response({'error': 'User not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+        if user.otp == otp:
+            user.otp = None
+            user.save()
+            # Delete existing tokens for the user
+            Token.objects.filter(user=user).delete()
+
+            # Create a new token
+            token, created = Token.objects.get_or_create(user=user)
+            user_data = CustomUserSerializer(user,context={"request":request}).data
+            user_data["token"] = token.key
+            return Response(user_data, status=status.HTTP_200_OK)
+        else:
+            return Response({'error': 'Invalid OTP.'}, status=status.HTTP_400_BAD_REQUEST)

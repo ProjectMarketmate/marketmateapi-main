@@ -17,5 +17,5 @@ class Util:
   
   @staticmethod
   def generateOTP():
-    return random.randint(100000,999999)  
+    return random.randint(1000,9999)  
     
