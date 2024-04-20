@@ -21,7 +21,7 @@ class OrderSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Order
-        fields = ['user','status','created_at','updated_at','items','id','staff']
+        fields = ['user','status','created_at','updated_at','items','id','staff','contactNumber','price','location']
 
     def get_items(self, obj):
         request = self.context.get('request')
@@ -96,7 +96,7 @@ class StaffOrdersListApiView(APIView):
             orders = Order.objects.filter(staff=userId)
             if order_status:
                 orders = orders.filter(status=order_status)
-            serializer = StaffOrderSerializer(orders, many=True,context={'request': request})
+            serializer = OrderSerializer(orders, many=True,context={'request': request})
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
