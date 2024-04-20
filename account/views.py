@@ -173,9 +173,21 @@ class CustomUserProfileView(APIView):
     
     
     
-    
-    
-    
-    
-    
-    
+
+
+# views.py
+
+from rest_framework import generics
+from rest_framework.response import Response
+from rest_framework import status
+from account.models import CustomUser  # Import your custom user model
+# Import your custom user serializer
+
+class AccountDeleteAPIView(generics.DestroyAPIView):
+    queryset = CustomUser.objects.all()  # Use CustomUser queryset instead of User
+    serializer_class = CustomUserSerializer  # Use CustomUserSerializer instead of UserSerializer
+
+    def delete(self, request, *args, **kwargs):
+        user = self.get_object()
+        user.delete()
+        return Response({'message': 'Account deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
