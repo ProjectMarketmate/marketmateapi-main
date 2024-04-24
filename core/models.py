@@ -79,7 +79,7 @@ class OrderItem(models.Model):
 
     
 
-
+#banner
 
 
 class OfferBanner(models.Model):
