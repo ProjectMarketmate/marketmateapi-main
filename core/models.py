@@ -29,11 +29,7 @@ class Product(models.Model):
     def __str__(self):
         return self.name
     
-    # def update_average_rating(self):
-    #     average_rating = self.ratings.aggregate(Avg('rating')).get('rating__avg')
-    #     self.average_rating = round(average_rating, 2) if average_rating else None
-    #     self.save()
-    
+
 
 
 class CartItem(models.Model):
@@ -79,7 +75,7 @@ class OrderItem(models.Model):
 
     
 
-
+#banner
 
 
 class OfferBanner(models.Model):
@@ -94,12 +90,3 @@ class OfferBanner(models.Model):
     
     
     
-    ###rating 
-    
-# class Rating(models.Model):
-#     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-#     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='ratings')
-#     rating = models.PositiveIntegerField()
-
-#     def __str__(self):
-#         return f"Rating for {self.product}: {self.rating}"

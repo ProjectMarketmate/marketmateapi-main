@@ -81,6 +81,7 @@ class OrderRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
 
 
 ##!!! Delivary Api View
+
 class CustomerDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
